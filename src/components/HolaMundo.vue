@@ -14,7 +14,8 @@ export default {
 }
 </script>
 
-<style>
+<!-- Añadir scoped para solo añadir a determinado componente -->
+<style scoped>
 .titulo {
     color: red;
 }
