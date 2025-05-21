@@ -4,48 +4,58 @@
       <h1>Estudiante guardado</h1>
     </div>
 
-    <label for="id_nombre">Nombre:</label>
-    <input v-model="nuevoNombre" id="id_nombre" type="text" />
+    <form class="formulario">
+      <div class="input-group">
+        <label for="id_nombre">Nombre:</label>
+        <input v-model="nuevoNombre" id="id_nombre" type="text" />
 
-    <label for="id_apellido">Apellido:</label>
-    <input v-model="nuevoApellido" id="id_apellido" type="text" />
+        <label for="id_apellido">Apellido:</label>
+        <input v-model="nuevoApellido" id="id_apellido" type="text" />
 
-    <label for="id_genero">Genero:</label>
-    <input v-model="nuevoGenero" id="id_genero" type="text" />
+        <label for="id_genero">Genero:</label>
+        <input v-model="nuevoGenero" id="id_genero" type="text" />
 
-    <label for="id_edad">Edad:</label>
-    <input v-model="nuevoEdad" id="id_edad" type="number" />
+        <label for="id_edad">Edad:</label>
+        <input v-model="nuevoEdad" id="id_edad" type="number" />
 
-    <label for="id_curso">Curso:</label>
-    <input v-model="nuevoCurso" id="id_curso" type="text" />
+        <label for="id_curso">Curso:</label>
+        <input v-model="nuevoCurso" id="id_curso" type="text" />
+      </div>
 
-    <button v-on:click="agregarEstudiante()" class="boton">Agregar</button>
+      <div class="boton-container">
+        <button v-on:click.prevent="agregarEstudiante()" class="boton">
+          Agregar
+        </button>
+      </div>
+    </form>
 
-    <table border="1">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Genero</th>
-          <th>Edad</th>
-          <th>Curso</th>
-          <th>Ver</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="{ nombre, apellido, genero, edad, curso } in lista"
-          :key="nombre"
-        >
-          <td>{{ nombre }}</td>
-          <td>{{ apellido }}</td>
-          <td>{{ genero }}</td>
-          <td>{{ edad }}</td>
-          <td>{{ curso }}</td>
-          <td><Button class="bver">Ver</Button></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="tabla-container">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Genero</th>
+            <th>Edad</th>
+            <th>Curso</th>
+            <th>Ver</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="{ nombre, apellido, genero, edad, curso } in lista"
+            :key="nombre"
+          >
+            <td>{{ nombre }}</td>
+            <td>{{ apellido }}</td>
+            <td>{{ genero }}</td>
+            <td>{{ edad }}</td>
+            <td>{{ curso }}</td>
+            <td><Button class="bver">Ver</Button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -53,13 +63,6 @@
 export default {
   data() {
     return {
-      //propiedad reactiva para el nombre
-      // nuevoNombre: "Nuevo",
-      // nuevoApellido: "Nuevo",
-      // nuevoGenero: "M",
-      // nuevoEdad: 0,
-      // nuevoCurso: "Vue",
-      //propiedad reactiva de tipo arreglo
       lista: [
         {
           nombre: "Cristian",
@@ -112,9 +115,13 @@ export default {
         },
       ],
       mostrar: false,
+      nuevoNombre: "",
+      nuevoApellido: "",
+      nuevoGenero: "",
+      nuevoEdad: "",
+      nuevoCurso: "",
     };
   },
-  //metodos
   methods: {
     agregarEstudiante() {
       const nuevo = {
@@ -124,93 +131,104 @@ export default {
         edad: this.nuevoEdad,
         curso: this.nuevoCurso,
       };
-      //agregar un nuevo estudiante a la lista {primero}
       this.lista.unshift(nuevo);
       this.mostrar = true;
-
-      // agregar un nuevo estudiante a la lista {final}
-      // this.lista.push(nuevo);
-
-      //change in 3 seconds
       setTimeout(() => {
         this.mostrar = false;
       }, 3000);
+      // Limpiar campos
+      this.nuevoNombre = "";
+      this.nuevoApellido = "";
+      this.nuevoGenero = "";
+      this.nuevoEdad = "";
+      this.nuevoCurso = "";
     },
   },
 };
 </script>
-
 <style>
 .container {
-  background: white;
-  border: 1px solid;
-  border-radius: 12px;
-  max-width: 800px;
-  margin: 50px;
-  padding: 50px 20px 20px 100px;
+  min-height: 100vh;
+  background: #cde4fc;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 
-label {
-  display: block;
+.formulario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.input-group label {
   color: black;
   text-align: left;
-  padding: 3px;
-  width: 80%;
+  margin-bottom: 3px;
+  width: 100%;
 }
 
-input {
+.input-group input {
   background: #387cc3;
   color: white;
-  width: 80%;
   border-radius: 8px;
-  margin-bottom: 20px;
-  border: 1px solid #387cc3;
-  padding: 10px 15px;
+  border: 2px solid #737171;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  box-sizing: border-box;
 }
 
-li {
-  text-align: left;
+.boton-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
-button {
+button, .bver {
   background: #387cc3;
   color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
   font-size: 20px;
   cursor: pointer;
-  width: 150px;
-  margin-bottom: 20px;
-}
-
-ul {
-  list-style: none;
-  margin-top: 60px;
-  margin: 1px solid black;
-}
-
-li {
-  background: #387cc3;
-  padding: 15px;
+  padding: 8px 30px;
   border-radius: 8px;
-  margin-bottom: 15px;
-  color: white;
-  font-size: 25px;
+  border: none;
+}
+
+.tabla-container {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 table {
   background: rgb(168, 201, 103);
-  align-content: center;
-  align-items: center;
-  width: 80%;
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.bver {
-  margin-top: 20px;
-  background: #387cc3;
-  
+th, td {
+  padding: 8px 10px;
+  text-align: center;
 }
 </style>
