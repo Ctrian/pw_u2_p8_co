@@ -1,25 +1,39 @@
 <template>
   <div class="container">
     <div v-show="mostrar">
-      <h1>Estudiante guardado</h1>
+      <h1>Paciente agregado</h1>
     </div>
 
     <form class="formulario">
       <div class="input-group">
-        <label for="id_nombre">Nombre:</label>
+        <label for="id_nombre">Nombre Completo:</label>
         <input v-model="nuevoNombre" id="id_nombre" type="text" />
-
-        <label for="id_apellido">Apellido:</label>
-        <input v-model="nuevoApellido" id="id_apellido" type="text" />
-
-        <label for="id_genero">Genero:</label>
-        <input v-model="nuevoGenero" id="id_genero" type="text" />
 
         <label for="id_edad">Edad:</label>
         <input v-model="nuevoEdad" id="id_edad" type="number" />
 
-        <label for="id_curso">Curso:</label>
-        <input v-model="nuevoCurso" id="id_curso" type="text" />
+        <label for="id_enfermedad_cronica"
+          >¿Padece alguna enfermedad crónica? (Especifique cual):</label
+        >
+        <input
+          v-model="nuevaEnfermedadCronica"
+          id="id_enfermedad_cronica"
+          type="text"
+        />
+
+        <label for="id_sintomas">Síntomas actuales (si tiene):</label>
+        <input v-model="nuevoSintomas" id="id_sintomas" type="text" />
+
+        <label for="id_actividad_fisica"
+          >Nivel de actividad física semanal:</label
+        >
+        <select v-model="nuevoActividadFisica" id="id_actividad_fisica" class="select_actividad">
+          <option disabled value="">Seleccione una opción</option>
+          <option value="sedentario">Sedentario</option>
+          <option value="ligero">Ligero</option>
+          <option value="moderado">Moderado</option>
+          <option value="intenso">Intenso</option>
+        </select>
       </div>
 
       <div class="boton-container">
@@ -30,27 +44,27 @@
     </form>
 
     <div class="tabla-container">
-      <table border="1">
+      <table border="2">
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Genero</th>
+            <th>Nombre Completo</th>
             <th>Edad</th>
-            <th>Curso</th>
+            <th>Enfermedad</th>
+            <th>Sintomas</th>
+            <th>Actividad</th>
             <th>Ver</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="{ nombre, apellido, genero, edad, curso } in lista"
+            v-for="{ nombre, edad, enfermedad, sintomas, actividad } in lista"
             :key="nombre"
           >
             <td>{{ nombre }}</td>
-            <td>{{ apellido }}</td>
-            <td>{{ genero }}</td>
             <td>{{ edad }}</td>
-            <td>{{ curso }}</td>
+            <td>{{ enfermedad }}</td>
+            <td>{{ sintomas }}</td>
+            <td>{{ actividad }}</td>
             <td><Button class="bver">Ver</Button></td>
           </tr>
         </tbody>
@@ -66,70 +80,63 @@ export default {
       lista: [
         {
           nombre: "Cristian",
-          apellido: "Olivares",
-          genero: "M",
           edad: 25,
-          curso: "Vue",
+          enfermedad: "Gastritis",
+          sintomas: "Estres",
+          actividad: "Caminata",
         },
         {
           nombre: "Juan",
-          apellido: "Pérez",
-          genero: "M",
           edad: 30,
-          curso: "React",
+          enfermedad: "Gastritis",
+          sintomas: "Estres",
+          actividad: "Caminata",
         },
         {
           nombre: "Pedro",
-          apellido: "Gómez",
-          genero: "M",
           edad: 28,
-          curso: "Angular",
+          enfermedad: "Gastritis",
+          sintomas: "Estres",
+          actividad: "Caminata",
         },
         {
           nombre: "María",
-          apellido: "López",
-          genero: "F",
           edad: 22,
-          curso: "Vue",
+          enfermedad: "Gastritis",
+          sintomas: "Estres",
+          actividad: "Caminata",
         },
         {
           nombre: "Ana",
-          apellido: "Martínez",
-          genero: "F",
           edad: 27,
-          curso: "React",
+          enfermedad: "Gastritis",
+          sintomas: "Estres",
+          actividad: "Caminata",
         },
         {
           nombre: "Luis",
-          apellido: "Fernández",
-          genero: "M",
           edad: 35,
-          curso: "Angular",
-        },
-        {
-          nombre: "Jose",
-          apellido: "Ramirez",
-          genero: "M",
-          edad: 40,
-          curso: "Vue",
+          enfermedad: "Gastritis",
+          sintomas: "Estres",
+          actividad: "Caminata",
         },
       ],
       mostrar: false,
       nuevoNombre: "",
-      nuevoApellido: "",
-      nuevoGenero: "",
       nuevoEdad: "",
-      nuevoCurso: "",
+      nuevaEnfermedadCronica: "",
+      nuevoSintomas: "",
+      nuevoActividadFisica: "",
     };
   },
   methods: {
     agregarEstudiante() {
       const nuevo = {
         nombre: this.nuevoNombre,
-        apellido: this.nuevoApellido,
-        genero: this.nuevoGenero,
         edad: this.nuevoEdad,
-        curso: this.nuevoCurso,
+        enfermedad: this.nuevaEnfermedadCronica,
+        sintomas: this.nuevoSintomas,
+        actividad: this.nuevoActividadFisica,
       };
       this.lista.unshift(nuevo);
       this.mostrar = true;
@@ -138,10 +145,10 @@ export default {
       }, 3000);
       // Limpiar campos
       this.nuevoNombre = "";
-      this.nuevoApellido = "";
-      this.nuevoGenero = "";
       this.nuevoEdad = "";
-      this.nuevoCurso = "";
+      this.nuevaEnfermedadCronica = "";
+      this.nuevoSintomas = "";
+      this.nuevoActividadFisica = "";
     },
   },
 };
@@ -153,8 +160,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 30px;
-  max-width: 600px;
+  padding-top: 20px;
+  max-width: 800px;
   margin: 0 auto;
   padding-left: 32px;
   padding-right: 32px;
@@ -165,7 +172,7 @@ export default {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   box-sizing: border-box;
 }
 
@@ -194,21 +201,28 @@ export default {
   box-sizing: border-box;
 }
 
+.select_actividad {
+  background: #387cc3;
+  border-radius: 8px;
+  border: 2px solid #737171;
+  color: white;
+  padding: 6px 20px;
+}
+
 .boton-container {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
 }
 
-button, .bver {
+.bver {
   background: #387cc3;
   color: white;
   font-size: 20px;
   cursor: pointer;
-  padding: 8px 30px;
   border-radius: 8px;
   border: none;
+  width: auto;
 }
 
 .tabla-container {
@@ -220,15 +234,15 @@ button, .bver {
 }
 
 table {
-  background: rgb(168, 201, 103);
+  background: #a8c967;
   width: 100%;
   border-collapse: collapse;
-  margin: 0 auto;
   box-sizing: border-box;
 }
 
-th, td {
-  padding: 8px 10px;
+th,
+td {
+  padding: 3px 10px;
   text-align: center;
 }
 </style>
