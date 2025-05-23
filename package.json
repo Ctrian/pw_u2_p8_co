@@ -8,6 +8,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "core-js": "^3.8.3",
     "pw_u2_p8_co": "file:",
     "vue": "^3.2.13"
